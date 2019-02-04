@@ -68,4 +68,18 @@ const getFile = (request, response, dir, type) => {
   });
 };
 
-module.exports.getFile = getFile;
+const getParty = (request, response) => {
+  getFile(request, response, '../client/party.mp4', 'video/mp4');
+}
+
+const getBling = (request, response) => {
+  getFile(request, response, '../client/bling.mp3', 'audio/mpeg');
+}
+
+const getBird = (request, response) => {
+  getFile(request, response,  '../client/bird.mp4', 'video/mp4');
+}
+
+module.exports.getParty = getParty;
+module.exports.getBling = getBling;
+module.exports.getBird = getBird;

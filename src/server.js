@@ -13,13 +13,13 @@ const onRequest = (request, response) => {
       htmlHandler.getIndex(request, response);
       break;
     case '/party.mp4':
-      mediaHandler.getFile(request, response, '../client/party.mp4', 'video/mp4');
+      mediaHandler.getParty(request, response);
       break;
     case '/bling.mp3':
-      mediaHandler.getFile(request, response, '../client/bling.mp3', 'audio/mpeg');
+      mediaHandler.getBling(request, response);
       break;
     case '/bird.mp4':
-      mediaHandler.getFile(request, response, '../client/bird.mp4', 'video/mp4');
+      mediaHandler.getBird(request, response);
       break;
     default:
       htmlHandler.getIndex(request, response);
