@@ -1,6 +1,31 @@
 const fs = require('fs');
 const path = require('path');
 
+const writeStreamResponseHead = (response, start, end, total, chunksize, type) => {
+  response.writeHead(206, {
+      'Content-Range': `bytes ${start}-${end}/${total}`,
+      'Accept-Ranges': 'bytes',
+      'Content-Length': chunksize,
+      'Content-Type': type,
+    });
+}
+
+const createStream = (file, startandend, response) =>{
+  let newStream = fs.createReadStream(file, startandend);
+  
+   newStream.on('open', () => {
+      newStream.pipe(response);
+    });
+
+    newStream.on('error', (streamErr) => {
+      response.end(streamErr);
+    });
+
+    return newStream;
+}
+
+
+
 const getFile = (request, response, dir, type) => {
   const file = path.resolve(__dirname, dir);
 
@@ -37,30 +62,5 @@ const getFile = (request, response, dir, type) => {
 
   });
 };
-
-const writeStreamResponseHead = (response, start, end, total, chunksize, type) => {
-  response.writeHead(206, {
-      'Content-Range': `bytes ${start}-${end}/${total}`,
-      'Accept-Ranges': 'bytes',
-      'Content-Length': chunksize,
-      'Content-Type': type,
-    });
-}
-
-const createStream = (file, startandend, response) =>{
-  let newStream = fs.createReadStream(file, startandend);
-  
-   newStream.on('open', () => {
-      newStream.pipe(response);
-    });
-
-    newStream.on('error', (streamErr) => {
-      response.end(streamErr);
-    });
-
-    return newStream;
-}
-
-
 
 module.exports.getFile = getFile;
