@@ -63,6 +63,8 @@ const getFile = (request, response, dir, type) => {
      stream.on('error', (streamErr) => {
       response.end(streamErr);
     });
+    
+    return stream;
   });
 };
 
